@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        function factorial(num){
+            if(num <= 1)    return 1;
+            return factorial(num - 1) * num;
+        }
+
+        factorial_memorized.cache={};
+
+        function factorial_memorized(num){
+            if(typeof factorial_memorized.cache[num] !== 'undefined'){
+                return factorial_memorized.cache[num];
+            }else{
+                if(num <= 1)    return 1;
+                factorial_memorized.cache[num]=factorial_memorized(num - 1) * num;
+                return factorial_memorized(num);
+            }
+        }
+
+        function memoized(fn){
+            return function(){
+
+                fn.momoized || (fn.memoized = {});
+
+                var args = Array.prototype.slice.call(arguments),
+                        hash = 'hash',
+                        i = args.length;
+
+                while(i--){
+                    typeof args[i]
+                }
+
+                var x = arguments[0];
+
+                if(typeof fn.memoized[x] === 'undefined'){
+                    fn.memoized[x] = fn.apply(null,arguments);
+                }
+
+                return fn.memoized[x];
+            }
+        }
+
+        function test(){
+            return 10;
+        }
+
+        console.log(test());
+
+        var fact_memoized = memoized(factorial);
+
+        /*console.log(factorial(10));*/
+        console.log(fact_memoized(10));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

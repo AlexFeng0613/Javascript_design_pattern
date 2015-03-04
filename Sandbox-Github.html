@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script>
+
+        // Adding the modules
+        Sandbox.modules = {};
+        Sandbox.modules.GITHUB_API = function(search){
+            search.searchRepositories = function(term){
+
+            };
+            search.searchUsers = function (term){
+
+            };
+            search.searchCode = function(term){
+
+            };
+        };
+
+        Sandbox.modules.GLL_API = function(search){
+            search.searchRepositories = function(term){
+
+            };
+            search.searchUsers = function (term){
+
+            };
+            search.searchCode = function(term){
+
+            };
+
+        };
+        // Sandbox constructor
+        function Sandbox(){
+            var args = Array.prototype.slice.call(arguments),// arguments = ['asdf', fn]
+                    callback = args.pop(),// callback = fn, args = ['asdf']
+                    modules = (args[0] && typeof args[0] === 'string') ? args : args[0],
+                    i;
+            // modules should be an array of strings that I want to implement
+            // ['string']
+            // ['asdf', 'ss']
+            if(!(this instanceof Sandbox))
+                return new Sandbox(modules, callback); // modules = ['asdf'], callback = fn
+            /*this.state = 'California';
+            this.city = 'Sunnyvale';*/
+            // add all modules if * or no specification is provided
+            if (!modules || modules[0] === '*') {
+                modules = [];
+                for (i in Sandbox.modules){
+                    if(Sandbox.modules.hasOwnProperty(i))
+                        modules.push(i);
+                }
+            }
+            // modules = ['weather', 'county']
+            // initialize required modules
+            for (i = 0; i < modules.length; i++) {
+                // modules[0] --> 'weather'
+                // Sandbox.modules['weather']
+                // Sandbox.modules.weather (this)
+                console.log(modules[i]);
+                Sandbox.modules[modules[i]](this);
+            }
+            callback(this);
+        }
+
+        Sandbox.prototype = {
+            application: 'Alex',
+            version: '1.0',
+            description: 'deals with the github and go live labs',
+            getApplication: function(){
+                return this.application;
+            }
+        };
+        window.onload = function(){
+            Sandbox('weather',function(weather){
+                weather.getWeatherByCity('sunnyvale');
+                Sandbox(['weather', 'county'], function(lib){
+                    console.log(lib);
+                });
+            });
+        };
+        // todo: implement restcountries.eu callingcode, language, currency, region, countryname, capital city and subregion
+
+    </script>
+</head>
+<body>
+</body>
+</html>

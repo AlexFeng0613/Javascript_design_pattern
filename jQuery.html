@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+
+        function $(selector){
+            console.log(selector instanceof HTMLElement)
+            if(typeof selector === 'string' && selector[0] !== '<'){
+                var element = document.getElementsByTagName(selector)[0];
+                console.log(element);
+                return $(element);
+            }else if(selector instanceof HTMLElement){
+                return {
+                    0:selector,
+                    html:function(innerHTML){
+                        if(typeof innerHTML === 'undefined'){
+                            console.log(this[0].innerHTML);
+                            return this[0].innerHTML;
+                        }else{
+                            this[0].innerHTML = innerHTML;
+                            return this;
+                        }
+                    },
+                    css:function(property,value){
+                        var styleProperty = property.replace(/-./g,function(str){return str.substr(1,1).toUpperCase();});
+                        console.log('styleProperty: ' + styleProperty);
+                        if(typeof this[0].style[styleProperty] === 'undefined'){
+                            throw new Error(styleProperty + 'does not exist as a style property');
+                        }else{
+                            this[0].style[styleProperty] = value;
+                            return this;
+                        }
+                    }
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded',function(){
+            $('div').css('background-color','yellow').html();
+
+            $('div').html();
+            console.log(document.getElementsByTagName('header')[0]);
+        });
+
+    </script>
+</head>
+<body>
+    <div>DIV DEMO</div>
+    <div>DIV DEMO2</div>
+    <header>header</header>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+
+        var GLLAPI = {
+            init:function(term, def){
+                var components = term.split('.');
+                if(components[0] === 'GLLAPI'){
+                    components.splice(0,1);
+                }
+
+                var current = this;
+
+                console.log(components);
+
+                for(var i = 0 ; i < components.length -1 ;i++){
+                    console.log(components[i]);
+                    console.log(current);
+                    current[components[i]] = {};
+                    console.log(current);
+                    current = current[components[i]];
+                }
+                console.log(def);
+                current[components.length - 1] = def;
+                return current[components.length - 1];
+            }
+        };
+
+        var fn = GLLAPI.init('GLLAPI.security.frontend.certificate.publicKey', function () {
+            return 'asdfsafsf asdf asdfsafa ssd';
+        });
+
+        console.log(GLLAPI.security.frontend.certificate.publicKey());
+    </script>
+</head>
+<body>
+
+</body>
+</html>
